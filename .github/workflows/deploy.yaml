@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HOST: root@31.43.203.115
-      DEPLOY_DIRECTORY: /mnt/disk1/serverlog
-      CONFIG_PATH: /mnt/disk1/serverlog/config/prod.yaml
+      DEPLOY_DIRECTORY: /mnt/disk1/restgrpcproxy
+      CONFIG_PATH: /mnt/disk1/restgrpcproxy/config/prod.yaml
       DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
 
     steps:
@@ -35,7 +35,7 @@ jobs:
       - name: Build app
         run: |
           go mod download
-          go build -o serverlog ./cmd/serverlog
+          go build -o restgrpcproxy ./cmd/restgrpcproxy
       - name: Deploy to VM
         run: |
           sudo apt-get install -y ssh rsync
@@ -45,16 +45,16 @@ jobs:
           rsync -avz -e 'ssh -i deploy_key.pem -o StrictHostKeyChecking=no' --exclude='.git' ./ ${{ env.HOST }}:${{ env.DEPLOY_DIRECTORY }}
       - name: Remove old systemd service file
         run: |
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f /etc/systemd/system/serverlog.service"
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f /etc/systemd/system/restgrpcproxy.service"
       - name: List workspace contents
         run: |
           echo "Listing deployment folder contents:"
           ls -la ${{ github.workspace }}/deployment
       - name: Copy systemd service file
         run: |
-          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/serverlog.service ${{ env.HOST }}:/tmp/serverlog.service
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "mv /tmp/serverlog.service /etc/systemd/system/serverlog.service"
+          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/restgrpcproxy.service ${{ env.HOST }}:/tmp/restgrpcproxy.service
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "mv /tmp/restgrpcproxy.service /etc/systemd/system/restgrpcproxy.service"
       - name: Start application
         run: |
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "systemctl daemon-reload && systemctl restart serverlog.service"
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "systemctl enable serverlog"
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "systemctl daemon-reload && systemctl restart restgrpcproxy.service"
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "systemctl enable restgrpcproxy"
