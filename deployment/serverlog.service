@@ -1,0 +1,15 @@
+[Unit]
+Description=Server returns request
+After=syslog.target
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/mnt/disk1/serverlog
+ExecStart=/mnt/disk1/serverlog/serverlog --config=/mnt/disk1/serverlog/config/prod.yaml
+Restart=always
+RestartSec=4
+StandardOutput=inherit
+
+[Install]
+WantedBy=multi-user.target 
