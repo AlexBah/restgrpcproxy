@@ -9,7 +9,7 @@ import (
 )
 
 // collects incoming request and sends it to the output
-func HandlerReturn(w http.ResponseWriter, r *http.Request, log *slog.Logger) {
+func HandlerReturn(w http.ResponseWriter, r *http.Request, gRPCServer string, log *slog.Logger) {
 	op := "restgrpcproxy.handler.HandlerReturn"
 
 	requestString := fmt.Sprintf("%s %s %s\n", r.Method, r.URL, r.Proto)

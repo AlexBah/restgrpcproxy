@@ -19,7 +19,7 @@ func main() {
 
 	shutdownCh := make(chan struct{})
 	port := ":" + fmt.Sprintf("%d", cfg.Port)
-	server.ListenPort(port, cfg.TlsPath, shutdownCh, log, cfg.Timeout)
+	server.ListenPort(port, cfg.GRPCServer, cfg.TlsPath, shutdownCh, log, cfg.Timeout)
 	server.ListenStopSig()
 	close(shutdownCh)
 	time.Sleep(cfg.Timeout)

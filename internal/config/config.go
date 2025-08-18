@@ -9,10 +9,11 @@ import (
 )
 
 type Config struct {
-	Env     string        `yaml:"env" env-required:"true"`
-	TlsPath string        `yaml:"tls_path" env-required:"true"`
-	Port    int           `yaml:"port" env-required:"true"`
-	Timeout time.Duration `yaml:"timeout"`
+	Env        string        `yaml:"env" env-required:"true"`
+	TlsPath    string        `yaml:"tls_path" env-required:"true"`
+	Port       int           `yaml:"port" env-required:"true"`
+	Timeout    time.Duration `yaml:"timeout"`
+	GRPCServer string        `yaml:"grpcserver" env-required:"true"`
 }
 
 // returns config from *.yaml

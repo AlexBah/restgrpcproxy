@@ -11,9 +11,9 @@ import (
 )
 
 // listens to a port, choosing between a secure or unsecured connection
-func ListenPort(port, tlsPath string, shutdownCh <-chan struct{}, log *slog.Logger, timeout time.Duration) {
+func ListenPort(port, gRPCServer, tlsPath string, shutdownCh <-chan struct{}, log *slog.Logger, timeout time.Duration) {
 	srv := &http.Server{Addr: port, Handler: http.HandlerFunc(
-		func(w http.ResponseWriter, r *http.Request) { handler.HandlerReturn(w, r, log) },
+		func(w http.ResponseWriter, r *http.Request) { handler.HandlerReturn(w, r, gRPCServer, log) },
 	)}
 	log.Info(fmt.Sprintf("Starting listen on port %s", srv.Addr))
 
