@@ -2,4 +2,4 @@ env: "prod"
 tls_path: "/etc/letsencrypt/live/krypsy.online/"
 port: 44045
 timeout: 10s
-grpcserver: "grpcs://31.43.203.115:44044"
+grpcserver: "31.43.203.115:44044"

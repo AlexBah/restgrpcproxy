@@ -2,4 +2,4 @@ env: "local"
 tls_path: "not exist"
 port: 44045
 timeout: 5s
-grpcserver: "grpcs://31.43.203.115:44044"
+grpcserver: "31.43.203.115:44044"
