@@ -20,25 +20,6 @@ func HandlerReturn(w http.ResponseWriter, r *http.Request, gRPCServer string, lo
 
 	ctx := context.Background()
 	mux := runtime.NewServeMux()
-
-	/*
-			creds, err := credentials.NewClientTLSFromFile("path/to/server-cert.pem", "")
-			if err != nil {
-				log.Error("failed to load TLS credentials", sl.Err(err))
-				http.Error(w, "Internal server error", http.StatusInternalServerError)
-				return
-			}
-
-			opts := []grpc.DialOption{
-				grpc.WithTransportCredentials(creds),
-				// without TLS:
-				// grpc.WithTransportCredentials(insecure.NewCredentials()),
-			}
-		opts := []grpc.DialOption{
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
-		}
-	*/
-
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
 			InsecureSkipVerify: true,
