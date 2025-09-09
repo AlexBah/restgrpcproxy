@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"restgrpcproxy/internal/lib/logger/sl"
 
-	gw "restgrpcproxy/gen/go/sso"
+	gw "github.com/AlexBah/Protos/gen/go/sso"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/exp/slog"

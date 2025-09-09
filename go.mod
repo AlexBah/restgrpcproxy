@@ -5,12 +5,13 @@ go 1.24.0
 toolchain go1.24.6
 
 require (
+	github.com/AlexBah/Protos v0.0.5
 	github.com/fatih/color v1.18.0
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	golang.org/x/exp v0.0.0-20250813145105-42675adae3e6
 	google.golang.org/genproto/googleapis/api v0.0.0-20250818200422-3122310a409c
-	google.golang.org/grpc v1.74.2
+	google.golang.org/grpc v1.75.0
 	google.golang.org/protobuf v1.36.7
 )
 
