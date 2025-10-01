@@ -16,6 +16,13 @@ func ListenPort(port, gRPCServer, tlsPath string, shutdownCh <-chan struct{}, lo
 	srv := &http.Server{Addr: port, Handler: http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) { handler.HandlerReturn(w, r, gRPCServer, log) },
 	)}
+
+	if tlsPath != "not exist" {
+		srv.TLSConfig = &tls.Config{
+			NextProtos: []string{"h2", "http/1.1"},
+		}
+	}
+
 	log.Info(fmt.Sprintf("Starting listen on port %s", srv.Addr))
 
 	if tlsPath == "not exist" {
@@ -26,7 +33,6 @@ func ListenPort(port, gRPCServer, tlsPath string, shutdownCh <-chan struct{}, lo
 		}()
 	} else {
 		go func() {
-			srv.TLSConfig = &tls.Config{NextProtos: []string{"h2", "http/1.1"}}
 			certFile := tlsPath + "fullchain.pem"
 			keyFile := tlsPath + "privkey.pem"
 			if err := srv.ListenAndServeTLS(certFile, keyFile); err != nil {
