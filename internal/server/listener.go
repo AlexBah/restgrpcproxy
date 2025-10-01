@@ -19,7 +19,14 @@ func ListenPort(port, gRPCServer, tlsPath string, shutdownCh <-chan struct{}, lo
 
 	if tlsPath != "not exist" {
 		srv.TLSConfig = &tls.Config{
-			NextProtos: []string{"h2", "http/1.1"},
+			NextProtos:               []string{"h2", "http/1.1"},
+			MinVersion:               tls.VersionTLS12,
+			PreferServerCipherSuites: true,
+			CurvePreferences: []tls.CurveID{
+				tls.X25519,
+				tls.CurveP256,
+				tls.CurveP384,
+			},
 		}
 	}
 
