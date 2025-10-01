@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"restgrpcproxy/internal/handler"
@@ -25,6 +26,7 @@ func ListenPort(port, gRPCServer, tlsPath string, shutdownCh <-chan struct{}, lo
 		}()
 	} else {
 		go func() {
+			srv.TLSConfig = &tls.Config{NextProtos: []string{"h2", "http/1.1"}}
 			certFile := tlsPath + "fullchain.pem"
 			keyFile := tlsPath + "privkey.pem"
 			if err := srv.ListenAndServeTLS(certFile, keyFile); err != nil {
